@@ -1,0 +1,2 @@
+# KonashiInspectorForAndroid
+Konashi の全機能を簡単にコントロールするための Android アプリ
