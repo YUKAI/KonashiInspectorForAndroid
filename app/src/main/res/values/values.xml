@@ -1,0 +1,24 @@
+<resources>
+    <string-array name="uartBaudrateLabels">
+        <item>@string/const.uart.baudrate2400</item>
+        <item>@string/const.uart.baudrate9600</item>
+        <item>@string/const.uart.baudrate19200</item>
+        <item>@string/const.uart.baudrate38400</item>
+        <item>@string/const.uart.baudrate57600</item>
+        <item>@string/const.uart.baudrate76800</item>
+        <item>@string/const.uart.baudrate115200</item>
+    </string-array>
+    <string-array name="i2cModeLabels">
+        <item>@string/const.i2c.mode100k</item>
+        <item>@string/const.i2c.mode400k</item>
+    </string-array>
+    <string-array name="spiSpeedLabels">
+        <item>@string/const.spi.speed200k</item>
+        <item>@string/const.spi.speed500k</item>
+        <item>@string/const.spi.speed1m</item>
+        <item>@string/const.spi.speed2m</item>
+        <item>@string/const.spi.speed3m</item>
+        <item>@string/const.spi.speed6m</item>
+    </string-array>
+    <color name="frosted_grass">#ccffffff</color>
+</resources>

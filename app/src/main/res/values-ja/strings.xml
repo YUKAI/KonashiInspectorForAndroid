@@ -1,0 +1,20 @@
+<resources>
+    <string name="action.clear">消去</string>
+    <string name="action.disconnection">切断</string>
+    <string name="action.find.konashi">konashi を探す</string>
+    <string name="action.read">読み込み</string>
+    <string name="action.reload">再読み込み</string>
+    <string name="action.send">送信</string>
+    <string name="action.set">設定</string>
+    <string name="action.write">書き込み</string>
+    <string name="message.confirmExit">終了してもよろしいですか?</string>
+    <string name="message.noConnection">konashi への接続がありません</string>
+    <string name="message.connected">接続しました</string>
+    <string name="message.disconnected">切断しました</string>
+    <string name="title.battery">バッテリー</string>
+    <string name="title.error">エラー</string>
+    <string name="title.konashiInfo">konashi の情報</string>
+    <string name="title.receivedData">受信データ</string>
+    <string name="action.close">閉じる</string>
+    <string name="action.open">開く</string>
+</resources>

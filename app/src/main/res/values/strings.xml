@@ -1,0 +1,54 @@
+<resources>
+    <string name="action.clear">Clear</string>
+    <string name="action.close">Close</string>
+    <string name="action.disconnection">Disconnect</string>
+    <string name="action.find.konashi">Find konashi</string>
+    <string name="action.open">Open</string>
+    <string name="action.read">Read</string>
+    <string name="action.reload">Reload</string>
+    <string name="action.send">Send</string>
+    <string name="action.set">Set</string>
+    <string name="action.write">Write</string>
+    <string name="appName" translatable="false">konashi Inspector</string>
+    <string name="message.confirmExit">Are you sure you want to exit?</string>
+    <string name="message.noConnection">No konashi connection</string>
+    <string name="message.connected">Connected</string>
+    <string name="message.disconnected">Disconnected</string>
+    <string name="title.aio" translatable="false">Analog Input</string>
+    <string name="title.battery">Battery</string>
+    <string name="title.communication" translatable="false">UART, I2C</string>
+    <string name="title.duty" translatable="false">Duty</string>
+    <string name="title.error">Error</string>
+    <string name="title.high" translatable="false">HIGH</string>
+    <string name="title.i2c" translatable="false">I2C (0x1F)</string>
+    <string name="title.input" translatable="false">Input</string>
+    <string name="title.konashiInfo">konashi Info</string>
+    <string name="title.low" translatable="false">LOW</string>
+    <string name="title.mode" translatable="false">Mode</string>
+    <string name="title.output" translatable="false">Output</string>
+    <string name="title.period" translatable="false">Period</string>
+    <string name="title.pin" translatable="false">Pin</string>
+    <string name="title.pio" translatable="false">PIO</string>
+    <string name="title.pullup" translatable="false">Pullup</string>
+    <string name="title.pwm" translatable="false">PWM</string>
+    <string name="title.rssi" translatable="false">RSSI</string>
+    <string name="title.spi" translatable="false">SPI</string>
+    <string name="title.uart" translatable="false">UART</string>
+    <string name="title.voltage" translatable="false">Voltage</string>
+    <string name="title.receivedData">Received Data</string>
+    <string name="const.uart.baudrate2400" translatable="false">2400</string>
+    <string name="const.uart.baudrate9600" translatable="false">9600</string>
+    <string name="const.uart.baudrate19200" translatable="false">19200</string>
+    <string name="const.uart.baudrate38400" translatable="false">38400</string>
+    <string name="const.uart.baudrate57600" translatable="false">57600</string>
+    <string name="const.uart.baudrate76800" translatable="false">76800</string>
+    <string name="const.uart.baudrate115200" translatable="false">115200</string>
+    <string name="const.i2c.mode100k" translatable="false">100kHz</string>
+    <string name="const.i2c.mode400k" translatable="false">400kHz</string>
+    <string name="const.spi.speed200k" translatable="false">200K</string>
+    <string name="const.spi.speed500k" translatable="false">500K</string>
+    <string name="const.spi.speed1m" translatable="false">1M</string>
+    <string name="const.spi.speed2m" translatable="false">2M</string>
+    <string name="const.spi.speed3m" translatable="false">3M</string>
+    <string name="const.spi.speed6m" translatable="false">6M</string>
+</resources>
