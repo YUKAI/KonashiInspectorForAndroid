@@ -14,6 +14,7 @@
     <string name="message.noConnection">No konashi connection</string>
     <string name="message.connected">Connected</string>
     <string name="message.disconnected">Disconnected</string>
+    <string name="message.spi.notSupported">SPI is not supported on this konashi.</string>
     <string name="title.aio" translatable="false">Analog Input</string>
     <string name="title.battery">Battery</string>
     <string name="title.communication" translatable="false">UART, I2C</string>

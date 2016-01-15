@@ -17,4 +17,5 @@
     <string name="title.receivedData">受信データ</string>
     <string name="action.close">閉じる</string>
     <string name="action.open">開く</string>
+    <string name="message.spi.notSupported">この konashi は SPI をサポートしていません。</string>
 </resources>

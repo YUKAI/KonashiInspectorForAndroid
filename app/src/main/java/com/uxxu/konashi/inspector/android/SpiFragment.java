@@ -3,6 +3,7 @@ package com.uxxu.konashi.inspector.android;
 import android.app.Fragment;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,41 +101,47 @@ public final class SpiFragment extends Fragment {
         mSpiDataSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.LOW)
-                        .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
-                            @Override
-                            public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
-                                return mKonashiManager.spiWrite(mSpiDataEditText.getText().toString().getBytes());
-                            }
-                        })
-                        .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
-                            @Override
-                            public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
-                                return mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.HIGH);
-                            }
-                        })
-                        .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
-                            @Override
-                            public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
-                                return mKonashiManager.spiRead();
-                            }
-                        })
-                        .then(new DoneCallback<BluetoothGattCharacteristic>() {
-                            @Override
-                            public void onDone(BluetoothGattCharacteristic result) {
-                                byte data[] = new byte[result.getValue().length];
-                                for (int i = 0; i < result.getValue().length; i++) {
-                                    data[i] = (byte) ((result.getValue()[i] & 0xff));
+
+                try {
+                    mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.LOW)
+                            .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
+                                @Override
+                                public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
+                                    return mKonashiManager.spiWrite(mSpiDataEditText.getText().toString().getBytes());
                                 }
-                                mSpiResultEditText.setText(Arrays.toString(data));
-                            }
-                        })
-                        .fail(new FailCallback<BletiaException>() {
-                            @Override
-                            public void onFail(BletiaException result) {
-                                Toast.makeText(getActivity(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                            })
+                            .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
+                                @Override
+                                public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
+                                    return mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.HIGH);
+                                }
+                            })
+                            .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
+                                @Override
+                                public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
+                                    return mKonashiManager.spiRead();
+                                }
+                            })
+                            .then(new DoneCallback<BluetoothGattCharacteristic>() {
+                                @Override
+                                public void onDone(BluetoothGattCharacteristic result) {
+                                    byte data[] = new byte[result.getValue().length];
+                                    for (int i = 0; i < result.getValue().length; i++) {
+                                        data[i] = (byte) ((result.getValue()[i] & 0xff));
+                                    }
+                                    mSpiResultEditText.setText(Arrays.toString(data));
+                                }
+                            })
+                            .fail(new FailCallback<BletiaException>() {
+                                @Override
+                                public void onFail(BletiaException result) {
+                                    Toast.makeText(getActivity(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } catch (NullPointerException e) {
+                    // TODO: hotfix for https://github.com/YUKAI/konashi-android-sdk/issues/170
+                    noticeForNoSpiDevices();
+                }
             }
         });
 
@@ -150,6 +157,15 @@ public final class SpiFragment extends Fragment {
         setEnableSpiViews(false);
     }
 
+    private void noticeForNoSpiDevices() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), getString(R.string.message_spi_notSupported), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void resetSpi() {
         if (!mKonashiManager.isReady()) {
             return;
@@ -159,35 +175,45 @@ public final class SpiFragment extends Fragment {
             String[] labels = getResources().getStringArray(R.array.spiSpeedLabels);
             String label = labels[i];
             int speed = Utils.spiLabelToValue(getActivity(), label);
-            mKonashiManager.spiConfig(Konashi.SPI_MODE_ENABLE_CPOL0_CPHA0,
-                    Konashi.SPI_BIT_ORDER_LITTLE_ENDIAN, speed)
-                    .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
-                        @Override
-                        public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
-                            return mKonashiManager.pinMode(Konashi.PIO2, Konashi.OUTPUT);
-                        }
-                    })
-                    .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
-                        @Override
-                        public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
-                            setEnableSpiViews(true);
-                            return mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.HIGH);
-                        }
-                    })
-                    .fail(new FailCallback<BletiaException>() {
-                        @Override
-                        public void onFail(BletiaException result) {
-                            Toast.makeText(getActivity(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            try {
+                mKonashiManager.spiConfig(Konashi.SPI_MODE_ENABLE_CPOL0_CPHA0,
+                        Konashi.SPI_BIT_ORDER_LITTLE_ENDIAN, speed)
+                        .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
+                            @Override
+                            public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
+                                return mKonashiManager.pinMode(Konashi.PIO2, Konashi.OUTPUT);
+                            }
+                        })
+                        .then(new DonePipe<BluetoothGattCharacteristic, BluetoothGattCharacteristic, BletiaException, Void>() {
+                            @Override
+                            public Promise<BluetoothGattCharacteristic, BletiaException, Void> pipeDone(BluetoothGattCharacteristic result) {
+                                setEnableSpiViews(true);
+                                return mKonashiManager.digitalWrite(Konashi.PIO2, Konashi.HIGH);
+                            }
+                        })
+                        .fail(new FailCallback<BletiaException>() {
+                            @Override
+                            public void onFail(BletiaException result) {
+                                Toast.makeText(getActivity(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } catch (NullPointerException e) {
+                // TODO: hotfix for https://github.com/YUKAI/konashi-android-sdk/issues/170
+                noticeForNoSpiDevices();
+            }
         } else {
-            mKonashiManager.spiConfig(Konashi.SPI_MODE_DISABLE, Konashi.SPI_BIT_ORDER_LITTLE_ENDIAN, Konashi.SPI_SPEED_1M)
-                    .then(new DoneCallback<BluetoothGattCharacteristic>() {
-                        @Override
-                        public void onDone(BluetoothGattCharacteristic result) {
-                            setEnableSpiViews(false);
-                        }
-                    });
+            try {
+                mKonashiManager.spiConfig(Konashi.SPI_MODE_DISABLE, Konashi.SPI_BIT_ORDER_LITTLE_ENDIAN, Konashi.SPI_SPEED_1M)
+                        .then(new DoneCallback<BluetoothGattCharacteristic>() {
+                            @Override
+                            public void onDone(BluetoothGattCharacteristic result) {
+                                setEnableSpiViews(false);
+                            }
+                        });
+            } catch (NullPointerException e) {
+                // TODO: hotfix for https://github.com/YUKAI/konashi-android-sdk/issues/170
+                noticeForNoSpiDevices();
+            }
         }
     }
 
