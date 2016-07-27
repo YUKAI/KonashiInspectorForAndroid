@@ -30,6 +30,60 @@ public class MainActivity extends AppCompatActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private View mOverlay;
     private Menu mMenu;
+    private final KonashiListener mKonashiListener = new KonashiListener() {
+
+        @Override
+        public void onConnect(KonashiManager manager) {
+            KonashiUtils.log("onReady");
+            refreshActionBarMenu();
+            mOverlay.setVisibility(View.GONE);
+
+            Toast.makeText(MainActivity.this, getString(R.string.message_connected), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onDisconnect(KonashiManager manager) {
+            KonashiUtils.log("onDisconnected");
+            refreshActionBarMenu();
+            mOverlay.setVisibility(View.VISIBLE);
+
+            Toast.makeText(MainActivity.this, getString(R.string.message_disconnected), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(KonashiManager manager, final BletiaException e) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.title_error))
+                    .setMessage(e.getMessage())
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }
+
+        @Override
+        public void onUpdatePioOutput(KonashiManager manager, int value) {
+
+        }
+
+        @Override
+        public void onUpdateUartRx(KonashiManager manager, byte[] value) {
+
+        }
+
+        @Override
+        public void onUpdateBatteryLevel(KonashiManager manager, int level) {
+
+        }
+
+        @Override
+        public void onUpdateSpiMiso(KonashiManager manager, byte[] value) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +200,6 @@ public class MainActivity extends AppCompatActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
@@ -190,59 +243,4 @@ public class MainActivity extends AppCompatActivity
             mMenu.findItem(R.id.action_disconnect).setVisible(false);
         }
     }
-
-    private final KonashiListener mKonashiListener = new KonashiListener() {
-
-        @Override
-        public void onConnect(KonashiManager manager) {
-            KonashiUtils.log("onReady");
-            refreshActionBarMenu();
-            mOverlay.setVisibility(View.GONE);
-
-            Toast.makeText(MainActivity.this, getString(R.string.message_connected), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onDisconnect(KonashiManager manager) {
-            KonashiUtils.log("onDisconnected");
-            refreshActionBarMenu();
-            mOverlay.setVisibility(View.VISIBLE);
-
-            Toast.makeText(MainActivity.this, getString(R.string.message_disconnected), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onError(KonashiManager manager, final BletiaException e) {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(getString(R.string.title_error))
-                    .setMessage(e.getMessage())
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .show();
-        }
-
-        @Override
-        public void onUpdatePioOutput(KonashiManager manager, int value) {
-
-        }
-
-        @Override
-        public void onUpdateUartRx(KonashiManager manager, byte[] value) {
-
-        }
-
-        @Override
-        public void onUpdateBatteryLevel(KonashiManager manager, int level) {
-
-        }
-
-        @Override
-        public void onUpdateSpiMiso(KonashiManager manager, byte[] value) {
-
-        }
-    };
 }
