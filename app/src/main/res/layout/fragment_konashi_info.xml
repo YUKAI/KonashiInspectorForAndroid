@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Konashi SDK: 2.0.0"
+            android:text="konashi SDK: 2.0.0"
             android:gravity="center"
             android:textSize="16sp"
             android:textStyle="bold" />
