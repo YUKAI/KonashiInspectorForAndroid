@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.uxxu.konashi.inspector.android"
         minSdkVersion 19
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -25,4 +25,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.uxxu.konashi:konashi-android-sdk:2.0.0'
+    compile "com.github.hotchemi:permissionsdispatcher:2.1.3"
+    apt "com.github.hotchemi:permissionsdispatcher-processor:2.1.3"
 }
