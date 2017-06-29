@@ -88,6 +88,24 @@ public class MainActivity extends AppCompatActivity
         public void onUpdateSpiMiso(KonashiManager manager, byte[] value) {
 
         }
+
+        @Override
+        public void onFindNoDevice(KonashiManager manager) {
+            KonashiUtils.log("onFindNoDevice");
+            refreshActionBarMenu();
+            mOverlay.setVisibility(View.VISIBLE);
+
+            Toast.makeText(MainActivity.this, getString(R.string.message_noDeviceFound), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onConnectOtherDevice(KonashiManager manager) {
+            KonashiUtils.log("onConnectOtherDevice");
+            refreshActionBarMenu();
+            mOverlay.setVisibility(View.VISIBLE);
+
+            Toast.makeText(MainActivity.this, getString(R.string.message_connectedDeviceWasNotKonashi), Toast.LENGTH_SHORT).show();
+        }
     };
 
     @Override

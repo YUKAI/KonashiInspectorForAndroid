@@ -153,4 +153,14 @@ public final class KonashiInfoFragment extends Fragment implements KonashiListen
     public void onUpdateBatteryLevel(KonashiManager manager, int level) {
 
     }
+
+    @Override
+    public void onFindNoDevice(KonashiManager manager) {
+
+    }
+
+    @Override
+    public void onConnectOtherDevice(KonashiManager manager) {
+
+    }
 }

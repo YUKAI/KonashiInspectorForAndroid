@@ -314,5 +314,13 @@ public final class CommunicationFragment extends Fragment {
         }
 
         @Override public void onUpdateBatteryLevel(KonashiManager manager, int level) {}
+
+        @Override
+        public void onFindNoDevice(KonashiManager manager) {
+        }
+
+        @Override
+        public void onConnectOtherDevice(KonashiManager manager) {
+        }
     };
 }

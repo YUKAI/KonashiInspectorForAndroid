@@ -111,6 +111,14 @@ public final class PioFragment extends Fragment {
         @Override
         public void onUpdateSpiMiso(KonashiManager manager, byte[] value) {
         }
+
+        @Override
+        public void onFindNoDevice(KonashiManager manager) {
+        }
+
+        @Override
+        public void onConnectOtherDevice(KonashiManager manager) {
+        }
     };
 
     public static final class PioTableRow extends TableRow {

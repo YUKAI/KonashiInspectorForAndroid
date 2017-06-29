@@ -18,4 +18,6 @@
     <string name="action.close">閉じる</string>
     <string name="action.open">開く</string>
     <string name="message.spi.notSupported">この konashi は SPI をサポートしていません。</string>
+    <string name="message.noDeviceFound">端末が見つかりませんでした</string>
+    <string name="message.connectedDeviceWasNotKonashi">konashi ではない端末へ接続しました</string>
 </resources>
