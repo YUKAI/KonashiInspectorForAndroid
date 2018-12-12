@@ -14,8 +14,8 @@ android {
         applicationId "com.uxxu.konashi.inspector.android"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 102000
-        versionName "1.2"
+        versionCode 200000
+        versionName "2.0"
     }
     signingConfigs {
         release {
